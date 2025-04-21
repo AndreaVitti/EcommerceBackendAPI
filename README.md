@@ -24,7 +24,11 @@ To run this project, you will need to add the following environment variables to
 
 
 ## Deployment
+Clone the project:
 
+```bash
+  git clone https://github.com/AndreaVitti/EcommerceBackendAPI.git
+```
 Navigate to the project folder or use an IDE and deploy the project through the terminal with the command:
 
 ```bash
@@ -37,4 +41,8 @@ To run it open the terminal and type the following command:
 ```
 
 ## Testing
-The endpoints of the API have been tested with the help of `Postman`. To test them yourself I highly suggest to install `Postman` and proceed to call the various CRUD operations.
+The endpoints of the API have been tested with the help of `Postman`.
+
+## Usage
+To use the project yourself I highly suggest to install `Postman` and proceed to check the various possible CRUD operations.\
+It's could also be benefitial to create a frontend accordingly.
