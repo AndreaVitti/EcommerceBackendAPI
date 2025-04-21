@@ -1,6 +1,5 @@
 package com.project.ecommerceApi.Service.Impl;
 
-import com.project.ecommerceApi.Entity.User;
 import com.project.ecommerceApi.Repository.UserRepository;
 import com.project.ecommerceApi.Service.UserCheckService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +12,7 @@ public class UserCheckImpl implements UserCheckService {
 
     private final UserRepository userRepository;
 
+    /*Check if the logged user is an admin*/
     @Override
     public boolean checkIfCurrentUserIsAdmin() {
         return SecurityContextHolder
@@ -21,10 +21,5 @@ public class UserCheckImpl implements UserCheckService {
                 .getAuthorities()
                 .stream()
                 .anyMatch(authority -> authority.toString().equals("ADMIN"));
-    }
-
-    @Override
-    public User findMyInfo(String email) {
-        return userRepository.findByEmail(email).orElse(null);
     }
 }

@@ -22,18 +22,21 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
+    /*Register a user*/
     @PostMapping("/register")
     public ResponseEntity<Response> register(@Valid @RequestBody RegisterRequest regRequest) {
         Response response = authenticationService.register(regRequest);
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Login with a user*/
     @PostMapping("/authenticate")
     public ResponseEntity<Response> authenticate(@Valid @RequestBody AuthRequest authRequest) {
         Response response = authenticationService.authenticate(authRequest);
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Get new access and refresh tokens*/
     @PostMapping("/refreshToken")
     public ResponseEntity<Response> refreshToken(HttpServletRequest refreshRequest, HttpServletResponse refreshResponse) {
         Response response = authenticationService.refreshToken(refreshRequest, refreshResponse);

@@ -24,6 +24,8 @@ public class UserServiceImpl implements UserService {
     public Response getAllUsers() {
         Response response = new Response();
         List<User> users = userRepository.findAll();
+
+        /*Check if there are users or not*/
         if (users.isEmpty()) {
             response.setHttpCode(404);
             response.setMessage("No user found");
@@ -36,6 +38,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Response getUserById(Long id) {
+
+        /*Check if the user can be searched*/
         Response response = isValidSearch(id);
         if (response.getHttpCode() == 200) {
             response.setUserDTO(Mapper.mapUserToUserDTO(response.getUser()));
@@ -46,6 +50,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Response getOrdersById(Long id) {
+
+        /*Check if the user can be searched*/
         Response response = isValidSearch(id);
         if (response.getHttpCode() == 200) {
             response.setUserDTO(Mapper.mapUserToUserDTOPlusOrderDTOSOrAddressesDTOS(response.getUser(), true));
@@ -67,6 +73,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response deleteUser(Long id) {
         Response response = new Response();
+
+        /*Check if the user exists*/
         try {
             userRepository.findById(id).orElseThrow(() -> new GeneralUseException("User " + id + " not found"));
         } catch (GeneralUseException e) {
@@ -79,9 +87,12 @@ public class UserServiceImpl implements UserService {
         return response;
     }
 
+    /*Check if the user can be searched*/
     private Response isValidSearch(Long id) {
         Response response = new Response();
         User user;
+
+        /*Check if the user exists*/
         try {
             user = userRepository.findById(id).orElseThrow(() -> new GeneralUseException("User " + id + " not found"));
         } catch (GeneralUseException e) {
@@ -89,6 +100,8 @@ public class UserServiceImpl implements UserService {
             response.setMessage(e.getMessage());
             return response;
         }
+
+        /*Check if the user is accessing its own resources*/
         if (!userCheckService.checkIfCurrentUserIsAdmin() && !SecurityContextHolder.getContext().getAuthentication().getName().equals(user.getEmail())) {
             response.setHttpCode(403);
             response.setMessage("User not authorized");

@@ -16,6 +16,7 @@ public class AddressController {
 
     private final AddressService addressService;
 
+    /*Add a address to a user*/
     @PostMapping("/add/{userId}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public ResponseEntity<Response> addAddressToUser(@PathVariable("userId") Long userId, @RequestBody AddressDTO addressDTO) {
@@ -23,6 +24,7 @@ public class AddressController {
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Get all addresses*/
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> getAllAddresses() {
@@ -30,6 +32,7 @@ public class AddressController {
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Get a specific address by its id*/
     @GetMapping("/getById/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public ResponseEntity<Response> getAddressesById(@PathVariable("id") Long id) {
@@ -37,6 +40,7 @@ public class AddressController {
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Delete an address*/
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public ResponseEntity<Response> deleteAddress(@PathVariable("id") Long id) {
@@ -44,6 +48,7 @@ public class AddressController {
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Update the info of an address*/
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public ResponseEntity<Response> updateAddress(@PathVariable("id") Long id,

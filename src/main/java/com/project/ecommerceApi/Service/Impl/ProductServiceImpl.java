@@ -28,6 +28,8 @@ public class ProductServiceImpl implements ProductService {
         Response response = new Response();
         Product product = new Product();
         Category category;
+
+        /*Check if the category exists*/
         try {
             category = categoryRepository.findByCategoryName(categoryName).orElseThrow(() -> new GeneralUseException("Category " + categoryName + " not found"));
         } catch (GeneralUseException e) {
@@ -51,6 +53,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Response getAllProducts() {
         Response response = new Response();
+
+        /*Check if there are categories or not*/
         List<Product> products = productRepository.findAll();
         if (products.isEmpty()) {
             response.setHttpCode(404);
@@ -64,6 +68,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Response getProductById(Long id) {
+
+        /*Check if the product can be searched*/
         Response response = isValidSearch(id);
         if (response.getHttpCode() == 200) {
             response.setProductDTO(Mapper.mapProductToProductDTO(response.getProduct()));
@@ -76,6 +82,8 @@ public class ProductServiceImpl implements ProductService {
     public Response getOrdersByProductId(Long id) {
         Response response = new Response();
         Product product;
+
+        /*Check if the product exists*/
         try {
             product = productRepository.findById(id).orElseThrow(() -> new GeneralUseException("Product " + id + " not found"));
         } catch (GeneralUseException e) {
@@ -91,6 +99,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Response deleteProduct(Long id) {
         Response response = new Response();
+
+        /*Check if the product exists*/
         try {
             productRepository.findById(id).orElseThrow(() -> new GeneralUseException("Product " + id + " not found"));
         } catch (GeneralUseException e) {
@@ -105,10 +115,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Response updateProduct(Long id, String name, String description, int stockQuantity, double price) {
+
+        /*Check if the product can be searched*/
         Response response = isValidSearch(id);
         if (response.getHttpCode() == 200) {
             Product product = response.getProduct();
             response.setProduct(null);
+
+            /*Check if the parameters are valid*/
             if (name != null && !product.getName().equals(name)) {
                 product.setName(name);
             }
@@ -129,22 +143,27 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Response uploadImageById(Long id, MultipartFile imageFile) throws IOException {
+
+        /*Check if the product can be searched*/
         Response response = isValidSearch(id);
         if (response.getHttpCode() != 200) {
             return response;
         }
         Product product = response.getProduct();
         response.setProduct(null);
+
+        /*Check if the parameters are valid*/
         if (imageFile.getOriginalFilename() != null && imageFile.getContentType() != null) {
             product.setImageName(imageFile.getOriginalFilename());
             product.setImageType(imageFile.getContentType());
-            product.setImageData(product.getImageData());
+            product.setImageData(imageFile.getBytes());
             productRepository.save(product);
         }
         response.setProductDTO(Mapper.mapProductToProductDTO(product));
         return response;
     }
 
+    /*Check if the product is actually stored in the table*/
     private Response isValidSearch(Long id) {
         Response response = new Response();
         Product product;

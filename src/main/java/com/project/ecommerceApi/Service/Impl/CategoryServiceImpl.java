@@ -32,6 +32,8 @@ public class CategoryServiceImpl implements CategoryService {
     public Response getAllCategories() {
         Response response = new Response();
         List<Category> categories = categoryRepository.findAll();
+
+        /*Checks if there are categories or not*/
         if (categories.isEmpty()) {
             response.setHttpCode(404);
             response.setMessage("No category found");
@@ -44,6 +46,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Response getByName(String name) {
+
+        /*Check if the address can be searched*/
         Response response = isValidSearch(name);
         if (response.getHttpCode() == 200) {
             response.setCategoryDTO(Mapper.mapCategoryToCategoryDTO(response.getCategory()));
@@ -54,6 +58,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Response getAllProducts(String name) {
+
+        /*Check if the category can be searched*/
         Response response = isValidSearch(name);
         if (response.getHttpCode() == 200) {
             response.setCategoryDTO(Mapper.mapCategoryToCategoryDTOPlusProductsDTOS(response.getCategory()));
@@ -65,6 +71,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Response deleteCategory(Long id) {
         Response response = new Response();
+
+        /*Check if the category exists*/
         try {
             categoryRepository.findById(id).orElseThrow(() -> new GeneralUseException("Category " + id + " not found"));
         } catch (GeneralUseException e) {
@@ -81,6 +89,8 @@ public class CategoryServiceImpl implements CategoryService {
     public Response updateCategory(Long id, String name) {
         Response response = new Response();
         Category category;
+
+        /*Check if the category exists*/
         try {
             category = categoryRepository.findById(id).orElseThrow(() -> new GeneralUseException("Category " + id + " not found"));
         } catch (GeneralUseException e) {
@@ -88,6 +98,8 @@ public class CategoryServiceImpl implements CategoryService {
             response.setMessage(e.getMessage());
             return response;
         }
+
+        /*Check if the parameters are valid*/
         if (name != null && !category.getCategoryName().equals(name)) {
             category.setCategoryName(name);
             categoryRepository.save(category);
@@ -97,6 +109,7 @@ public class CategoryServiceImpl implements CategoryService {
         return response;
     }
 
+    /*Check if the category is actually stored in the table*/
     private Response isValidSearch(String name) {
         Response response = new Response();
         Category category;

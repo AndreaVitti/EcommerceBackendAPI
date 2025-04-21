@@ -24,6 +24,7 @@ public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
     private final CustomLogOutService customLogOut;
 
+    /*Add the jwtFilter to the filter chain*/
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http

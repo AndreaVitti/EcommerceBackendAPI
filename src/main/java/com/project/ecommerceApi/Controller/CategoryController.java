@@ -16,6 +16,7 @@ public class CategoryController {
 
     private final CategoryService categoryService;
 
+    /*Add a category*/
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> addCategory(@RequestBody CategoryDTO categoryDTO) {
@@ -23,6 +24,7 @@ public class CategoryController {
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Get all categories*/
     @GetMapping("/all")
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     public ResponseEntity<Response> getAllCategories() {
@@ -30,6 +32,7 @@ public class CategoryController {
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Get a specific category by its name*/
     @GetMapping("/getByName/{name}")
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     public ResponseEntity<Response> getByName(@PathVariable("name") String name) {
@@ -37,6 +40,7 @@ public class CategoryController {
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Get all products under a specific category*/
     @GetMapping("/getAllProducts/{name}")
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     public ResponseEntity<Response> getAllProducts(@PathVariable("name") String name) {
@@ -44,6 +48,7 @@ public class CategoryController {
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Delete a category*/
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> deleteCategory(@PathVariable("id") Long id) {
@@ -51,6 +56,7 @@ public class CategoryController {
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Update the info of a category*/
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> updateCategory(@PathVariable("id") Long id, @RequestParam(required = false) String name) {

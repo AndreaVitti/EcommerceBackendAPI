@@ -29,6 +29,8 @@ public class AddressServiceImpl implements AddressService {
         Response response = new Response();
         Address address = new Address();
         User user;
+
+        /*Checks if the user exists*/
         try {
             user = userRepository.findById(userId).orElseThrow(() -> new GeneralUseException("User " + userId + " not found"));
         } catch (GeneralUseException e) {
@@ -36,12 +38,16 @@ public class AddressServiceImpl implements AddressService {
             response.setMessage(e.getMessage());
             return response;
         }
+
+        /*Check if the logged user is accessing its resources or not*/
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!userCheckService.checkIfCurrentUserIsAdmin() && !loggedUser.getId().equals(userId)) {
             response.setHttpCode(403);
             response.setMessage("User not authorized");
             return response;
         }
+
+        /*Create and save the address*/
         address.setUser(user);
         address.setAddressName(addressDTO.getAddressName());
         address.setCity(addressDTO.getCity());
@@ -56,6 +62,8 @@ public class AddressServiceImpl implements AddressService {
     public Response getAllAddresses() {
         Response response = new Response();
         List<Address> addresses = addressRepository.findAll();
+
+        /*Checks if there are addresses or not*/
         if (addresses.isEmpty()) {
             response.setHttpCode(404);
             response.setMessage("No address found");
@@ -68,6 +76,8 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Response getAddressesById(Long id) {
+
+        /*Check if the address can be searched*/
         Response response = isValidSearch(id);
         if (response.getHttpCode() == 200) {
             response.setAddressDTO(Mapper.mapAddressToAddressDTO(response.getAddress()));
@@ -78,6 +88,8 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public Response deleteAddress(Long id) {
+
+        /*Checks if the address can be deleted*/
         Response response = isValidSearch(id);
         if (response.getHttpCode() == 200) {
             response.setAddress(null);
@@ -92,6 +104,8 @@ public class AddressServiceImpl implements AddressService {
         if (response.getHttpCode() == 200) {
             Address address = response.getAddress();
             response.setAddress(null);
+
+            /*Check if the parameters are valid*/
             if (addressName != null && !address.getAddressName().equals(addressName)) {
                 address.setAddressName(addressName);
             }
@@ -110,6 +124,7 @@ public class AddressServiceImpl implements AddressService {
         return response;
     }
 
+    /*Check if the address is actually stored in the table*/
     private Response isValidSearch(Long id) {
         Response response = new Response();
         Address address;
@@ -123,6 +138,7 @@ public class AddressServiceImpl implements AddressService {
         return supplemetaryValidation(address, response);
     }
 
+    /*Check if the user is accessing its own resources*/
     private Response supplemetaryValidation(Address address, Response response) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!userCheckService.checkIfCurrentUserIsAdmin() &&

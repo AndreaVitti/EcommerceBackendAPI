@@ -19,6 +19,7 @@ public class ProductController {
 
     private final ProductService productService;
 
+    /*Add a product to a category*/
     @PostMapping("/addToCategory/{category}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> addProduct(@PathVariable("category") String categoryName, @RequestPart("data") ProductDTO productDTO, @RequestPart("image") MultipartFile imageFile) {
@@ -31,6 +32,7 @@ public class ProductController {
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Get all products*/
     @GetMapping("/all")
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     public ResponseEntity<Response> getAllProducts() {
@@ -38,6 +40,7 @@ public class ProductController {
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Get a specific product by its id*/
     @GetMapping("/getById/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     public ResponseEntity<Response> getProductById(@PathVariable("id") Long id) {
@@ -45,6 +48,7 @@ public class ProductController {
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Get all the orders containing a certain product*/
     @GetMapping("/getOrdersById/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> getOrdersByProductId(@PathVariable("id") Long id) {
@@ -52,6 +56,7 @@ public class ProductController {
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Delete a product*/
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> deleteProduct(@PathVariable("id") Long id) {
@@ -59,6 +64,7 @@ public class ProductController {
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Update the info of a product*/
     @PutMapping("/update/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> updateProduct(@PathVariable("id") Long id,
@@ -70,6 +76,7 @@ public class ProductController {
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
 
+    /*Upload a new image of a product*/
     @PostMapping("/uploadImage/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> uploadImageById(@PathVariable("id") Long id, @RequestPart("image") MultipartFile imageFile) {
