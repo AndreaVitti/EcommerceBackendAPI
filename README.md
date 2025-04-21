@@ -31,7 +31,10 @@ Navigate to the project folder or use an IDE and deploy the project through the 
   .\mvnw clean install 
 ```
 This will result in the creation of an executable `.jar` file in the target folder of the project.\
-To run it open the terminal in and type the following command:
+To run it open the terminal and type the following command:
 ```bash
   java -jar ecommerceApi-0.0.1-SNAPSHOT.jar 
 ```
+
+## Testing
+The endpoints of the API have been tested with the help of `Postman`. To test them yourself I highly suggest to install `Postman` and proceed to call the various CRUD operations.
