@@ -5,6 +5,7 @@ import com.project.ecommerceApi.DTO.OrderRequest;
 import com.project.ecommerceApi.DTO.PaymentRequest;
 import com.project.ecommerceApi.DTO.Response;
 import com.project.ecommerceApi.Service.OrderService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,7 +23,7 @@ public class OrderController {
     @PostMapping("/add/{userId}")
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     public ResponseEntity<Response> addOrder(@PathVariable("userId") Long userId,
-                                             @RequestBody OrderRequest orderRequest) {
+                                             @Valid @RequestBody OrderRequest orderRequest) {
         Response response = orderService.addOrder(userId, orderRequest);
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
@@ -30,7 +31,7 @@ public class OrderController {
     /*Request the payment of an order*/
     @PostMapping("/checkout")
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    public ResponseEntity<Response> checkoutOrder(@RequestBody PaymentRequest paymentRequest) {
+    public ResponseEntity<Response> checkoutOrder(@Valid @RequestBody PaymentRequest paymentRequest) {
         Response response = orderService.checkoutOrder(paymentRequest);
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
@@ -38,7 +39,7 @@ public class OrderController {
     /*Add a product to a pending order*/
     @PostMapping("/addItemToOrder/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
-    public ResponseEntity<Response> addItemToOrder(@PathVariable("id") Long id, @RequestBody ItemsRequested itemsRequested) {
+    public ResponseEntity<Response> addItemToOrder(@PathVariable("id") Long id, @Valid @RequestBody ItemsRequested itemsRequested) {
         Response response = orderService.addItemToOrder(id, itemsRequested);
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }

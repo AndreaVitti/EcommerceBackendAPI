@@ -3,6 +3,7 @@ package com.project.ecommerceApi.Controller;
 import com.project.ecommerceApi.DTO.ProductDTO;
 import com.project.ecommerceApi.DTO.Response;
 import com.project.ecommerceApi.Service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,7 +23,7 @@ public class ProductController {
     /*Add a product to a category*/
     @PostMapping("/addToCategory/{category}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Response> addProduct(@PathVariable("category") String categoryName, @RequestPart("data") ProductDTO productDTO, @RequestPart("image") MultipartFile imageFile) {
+    public ResponseEntity<Response> addProduct(@PathVariable("category") String categoryName, @Valid @RequestPart("data") ProductDTO productDTO, @RequestPart("image") MultipartFile imageFile) {
         Response response;
         try {
             response = productService.addProduct(categoryName, productDTO, imageFile);

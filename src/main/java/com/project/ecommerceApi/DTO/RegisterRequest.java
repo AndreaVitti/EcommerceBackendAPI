@@ -3,6 +3,7 @@ package com.project.ecommerceApi.DTO;
 
 import com.project.ecommerceApi.Type.Role;
 import com.project.ecommerceApi.Validation.PhoneIsValid;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,7 @@ public class RegisterRequest {
     private String firstname;
     @NotBlank(message = "Last name is required")
     private String lastname;
-    @NotBlank(message = "Email is required")
+    @Email(message = "Email is required")
     private String email;
     @NotBlank(message = "Password required")
     @Size(min = 12, message = "Password too long")

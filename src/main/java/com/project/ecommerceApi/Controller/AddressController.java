@@ -3,6 +3,7 @@ package com.project.ecommerceApi.Controller;
 import com.project.ecommerceApi.DTO.AddressDTO;
 import com.project.ecommerceApi.DTO.Response;
 import com.project.ecommerceApi.Service.AddressService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +20,7 @@ public class AddressController {
     /*Add a address to a user*/
     @PostMapping("/add/{userId}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
-    public ResponseEntity<Response> addAddressToUser(@PathVariable("userId") Long userId, @RequestBody AddressDTO addressDTO) {
+    public ResponseEntity<Response> addAddressToUser(@PathVariable("userId") Long userId, @Valid @RequestBody AddressDTO addressDTO) {
         Response response = addressService.addAddressToUser(userId, addressDTO);
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }

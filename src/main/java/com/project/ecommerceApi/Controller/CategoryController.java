@@ -3,6 +3,7 @@ package com.project.ecommerceApi.Controller;
 import com.project.ecommerceApi.DTO.CategoryDTO;
 import com.project.ecommerceApi.DTO.Response;
 import com.project.ecommerceApi.Service.CategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +20,7 @@ public class CategoryController {
     /*Add a category*/
     @PostMapping("/add")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Response> addCategory(@RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<Response> addCategory(@Valid @RequestBody CategoryDTO categoryDTO) {
         Response response = categoryService.addCategory(categoryDTO);
         return ResponseEntity.status(response.getHttpCode()).body(response);
     }
