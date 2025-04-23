@@ -11,7 +11,7 @@ This API support the following operations:
 - registration, login and logout of users
 - store users' addresses 
 - creation of different categories of products
-- managing the different produts (add, restocking, updating etc...)
+- managing the different produts (adding, restocking, updating etc...)
 - managing the different order placed by users 
 - payment through the Stripe API
 
@@ -38,7 +38,7 @@ Clone the project:
 ```bash
   git clone https://github.com/AndreaVitti/EcommerceBackendAPI.git
 ```
-Navigate to the project folder or use an IDE and deploy the project through the terminal with the command:
+Navigate to the project directory or use an IDE and deploy the project through the terminal with the command:
 
 ```bash
   .\mvnw clean install 
