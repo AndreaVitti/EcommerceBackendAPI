@@ -15,7 +15,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -131,7 +130,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 createTokenObj(newRefreshToken, user);
                 response.setHttpCode(200);
                 response.setToken(JwtToken);
-                response.setMessage(newRefreshToken);
+                response.setRefreshToken(newRefreshToken);
                 return response;
             }
         }
