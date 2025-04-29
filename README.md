@@ -3,7 +3,7 @@
 
 
 ## Description
-This project's aim is to create an API capable of managing various products' orders made by registered users with different levels of authorization through the use of a REST architecture using CRUD operations.
+This project's aim is to create an API capable of managing various products' orders made by registered users with different levels of authorization through the use of a REST architecture providing various CRUD operations.
 
 
 ## Functionalities
