@@ -78,7 +78,7 @@ public class ProductController {
     }
 
     /*Upload a new image of a product*/
-    @PostMapping("/uploadImage/{id}")
+    @PutMapping("/uploadImage/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> uploadImageById(@PathVariable("id") Long id, @RequestPart("image") MultipartFile imageFile) {
         Response response;
