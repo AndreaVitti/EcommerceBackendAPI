@@ -1,5 +1,5 @@
 
-# Backend for an E-commerce API made with Spring Boot
+# Backend for an E-commerce made with Spring Boot
 
 
 ## Description
