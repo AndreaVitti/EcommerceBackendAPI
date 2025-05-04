@@ -7,17 +7,16 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/addresses")
 public class AddressController {
 
     private final AddressService addressService;
 
-    /*Add a address to a user*/
+    /*Add an address to a user*/
     @PostMapping("/add/{userId}")
     @PreAuthorize("hasAnyAuthority('ADMIN', 'USER')")
     public ResponseEntity<Response> addAddressToUser(@PathVariable("userId") Long userId, @Valid @RequestBody AddressDTO addressDTO) {
